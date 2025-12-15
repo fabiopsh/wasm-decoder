@@ -1,0 +1,21 @@
+{
+	"name": "wasm-decoder",
+	"version": "1.0.0",
+	"description": "AI-Assisted WebAssembly Decoder (Project B07)",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"solid-js": "^1.8.11"
+	},
+	"devDependencies": {
+		"autoprefixer": "^10.4.17",
+		"postcss": "^8.4.35",
+		"tailwindcss": "^3.4.1",
+		"typescript": "^5.3.3",
+		"vite": "^5.0.12",
+		"vite-plugin-solid": "^2.8.2"
+	}
+}
