@@ -1,6 +1,7 @@
 {
 	"name": "wasm-decoder",
 	"version": "1.0.0",
+	"type": "module",
 	"description": "AI-Assisted WebAssembly Decoder (Project B07)",
 	"scripts": {
 		"dev": "vite",
