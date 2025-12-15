@@ -53,7 +53,8 @@ const App: Component = () => {
 						W
 					</div>
 					<h1 class="text-2xl font-bold tracking-tight">
-						Wasm Decoder <span class="text-sm font-normal opacity-70 ml-2">v1.0</span>
+						Wasm Decoder
+						<span class="text-sm font-normal opacity-70 ml-2">by Fabio Piscitelli M.715339 v1.0</span>
 					</h1>
 				</div>
 			</header>
