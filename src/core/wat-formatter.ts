@@ -113,19 +113,23 @@ export class WatFormatter {
 
 		const space = operands ? " " : "";
 
-		// Indentation for block/loop/if could be nice
-		if (instr.mnemonic === "end") {
+		// Replace underscores with dots for standard WAT format (e.g. i32_const -> i32.const)
+		const mnemonic = instr.mnemonic.replace(/_/g, ".");
+
+		// Handle indentation
+		if (instr.mnemonic === "else") {
 			this.outdent();
-		}
-
-		this.emit(`${instr.mnemonic}${space}${operands}`);
-
-		if (["block", "loop", "if", "else"].includes(instr.mnemonic)) {
+			this.emit(`${mnemonic}${space}${operands}`);
 			this.indent();
+		} else {
+			if (instr.mnemonic === "end") {
+				this.outdent();
+			}
+			this.emit(`${mnemonic}${space}${operands}`);
+			if (["block", "loop", "if"].includes(instr.mnemonic)) {
+				this.indent();
+			}
 		}
-		// 'else' specifically should be "dedent then indent" but simplest is just indent next.
-		// Actually 'else' is: dedent previous block part, indent else part.
-		// But we just indent.
 	}
 
 	/**

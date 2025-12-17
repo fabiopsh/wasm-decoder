@@ -71,6 +71,19 @@ export const Opcode = {
 	i32_ge_s: 0x4e, // Compare i32 greater than or equal (signed)
 	i32_ge_u: 0x4f, // Compare i32 greater than or equal (unsigned)
 
+	// i64 Comparison Instructions
+	i64_eqz: 0x50, // Compare i64 equal to zero
+	i64_eq: 0x51, // Compare i64 equality
+	i64_ne: 0x52, // Compare i64 inequality
+	i64_lt_s: 0x53, // Compare i64 less than (signed)
+	i64_lt_u: 0x54, // Compare i64 less than (unsigned)
+	i64_gt_s: 0x55, // Compare i64 greater than (signed)
+	i64_gt_u: 0x56, // Compare i64 greater than (unsigned)
+	i64_le_s: 0x57, // Compare i64 less than or equal (signed)
+	i64_le_u: 0x58, // Compare i64 less than or equal (unsigned)
+	i64_ge_s: 0x59, // Compare i64 greater than or equal (signed)
+	i64_ge_u: 0x5a, // Compare i64 greater than or equal (unsigned)
+
 	i32_add: 0x6a, // i32 addition
 	i32_sub: 0x6b, // i32 subtraction
 	i32_mul: 0x6c, // i32 multiplication
@@ -86,6 +99,26 @@ export const Opcode = {
 	i32_shr_u: 0x76, // i32 unsigned shift right
 	i32_rotl: 0x77, // i32 rotate left
 	i32_rotr: 0x78, // i32 rotate right
+
+	// i64 Arithmetic Instructions
+	i64_clz: 0x79, // i64 count leading zeros
+	i64_ctz: 0x7a, // i64 count trailing zeros
+	i64_popcnt: 0x7b, // i64 population count
+	i64_add: 0x7c, // i64 addition
+	i64_sub: 0x7d, // i64 subtraction
+	i64_mul: 0x7e, // i64 multiplication
+	i64_div_s: 0x7f, // i64 signed division
+	i64_div_u: 0x80, // i64 unsigned division
+	i64_rem_s: 0x81, // i64 signed remainder
+	i64_rem_u: 0x82, // i64 unsigned remainder
+	i64_and: 0x83, // i64 bitwise AND
+	i64_or: 0x84, // i64 bitwise OR
+	i64_xor: 0x85, // i64 bitwise XOR
+	i64_shl: 0x86, // i64 shift left
+	i64_shr_s: 0x87, // i64 signed shift right
+	i64_shr_u: 0x88, // i64 unsigned shift right
+	i64_rotl: 0x89, // i64 rotate left
+	i64_rotr: 0x8a, // i64 rotate right
 
 	// More can be added as needed
 } as const;
