@@ -3,10 +3,19 @@ import { LEB128 } from "./leb128";
 import { MAGIC_NUMBER, VERSION, Opcode, OpcodeValue } from "./constants";
 import { WasmModule, SectionId, ValType, FuncType, ExportEntry, FuncBody, Instruction } from "./types";
 
+/**
+ * Parses a WebAssembly binary Buffer into a structured WasmModule.
+ * This parser handles the specific sections defined in the WebAssembly binary format.
+ * Reference: https://webassembly.github.io/spec/core/binary/modules.html
+ */
 export class WasmParser {
 	private reader: BinaryReader;
 	private module: WasmModule;
 
+	/**
+	 * Creates a new WasmParser instance.
+	 * @param buffer The Uint8Array containing the WebAssembly binary.
+	 */
 	constructor(buffer: Uint8Array) {
 		this.reader = new BinaryReader(buffer);
 		this.module = {
@@ -17,6 +26,11 @@ export class WasmParser {
 		};
 	}
 
+	/**
+	 * Parses the WebAssembly binary and returns the module structure.
+	 * @returns The parsed WasmModule.
+	 * @throws Error if the binary header is invalid or parsing fails.
+	 */
 	parse(): WasmModule {
 		this.validateHeader();
 
@@ -60,6 +74,10 @@ export class WasmParser {
 		return this.module;
 	}
 
+	/**
+	 * Validates the WebAssembly binary header (Magic Number and Version).
+	 * @throws Error if the magic number or version is invalid.
+	 */
 	private validateHeader() {
 		const magic = this.reader.readBytes(4);
 		// 0x00 0x61 0x73 0x6d -> 0x6d736100 (LE)
@@ -75,6 +93,10 @@ export class WasmParser {
 		}
 	}
 
+	/**
+	 * Parses the Type Section (ID 1).
+	 * Reads function signatures (types).
+	 */
 	private parseTypeSection() {
 		const count = LEB128.readVarUint32(this.reader);
 		for (let i = 0; i < count; i++) {
@@ -99,6 +121,10 @@ export class WasmParser {
 		}
 	}
 
+	/**
+	 * Parses the Function Section (ID 3).
+	 * Maps function indices to type indices.
+	 */
 	private parseFunctionSection() {
 		const count = LEB128.readVarUint32(this.reader);
 		for (let i = 0; i < count; i++) {
@@ -107,6 +133,10 @@ export class WasmParser {
 		}
 	}
 
+	/**
+	 * Parses the Export Section (ID 7).
+	 * Reads exported entities (functions, memories, etc.).
+	 */
 	private parseExportSection() {
 		const count = LEB128.readVarUint32(this.reader);
 		for (let i = 0; i < count; i++) {
@@ -121,6 +151,10 @@ export class WasmParser {
 		}
 	}
 
+	/**
+	 * Parses the Code Section (ID 10).
+	 * Reads function bodies (locals and instructions).
+	 */
 	private parseCodeSection() {
 		const count = LEB128.readVarUint32(this.reader);
 		for (let i = 0; i < count; i++) {
@@ -148,6 +182,11 @@ export class WasmParser {
 		}
 	}
 
+	/**
+	 * Parses a sequence of instructions until the end position is reached.
+	 * @param endPos The file offset where the function body ends.
+	 * @returns An array of parsed instructions.
+	 */
 	private parseInstructions(endPos: number): Instruction[] {
 		const instructions: Instruction[] = [];
 		while (this.reader.pos < endPos) {
@@ -168,6 +207,11 @@ export class WasmParser {
 		return instructions;
 	}
 
+	/**
+	 * Decodes a single instruction and its operands based on the opcode.
+	 * @param opcode The opcode of the instruction.
+	 * @returns The parsed Instruction object.
+	 */
 	private decodeInstruction(opcode: number): Instruction {
 		const instr: Instruction = {
 			opcode,
@@ -224,6 +268,11 @@ export class WasmParser {
 		return instr;
 	}
 
+	/**
+	 * Gets the mnemonic string for a given opcode.
+	 * @param opcode The opcode value.
+	 * @returns The mnemonic string (e.g., "i32.add") or "unknown_0x...".
+	 */
 	private getMnemonic(opcode: number): string {
 		// Reverse lookup from constants or a map
 		const entry = Object.entries(Opcode).find(([k, v]) => v === opcode);

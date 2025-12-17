@@ -1,15 +1,27 @@
 import { WasmModule, ValType, Instruction, FuncBody } from "./types";
 import { Opcode } from "./constants";
 
+/**
+ * Converts a parsed WasmModule back into the WebAssembly Text Format (WAT).
+ * This is useful for debugging and displaying the structure of a WASM file.
+ */
 export class WatFormatter {
 	private module: WasmModule;
 	private indentLevel: number = 0;
 	private lines: string[] = [];
 
+	/**
+	 * Creates a new WatFormatter instance.
+	 * @param module The WasmModule to format.
+	 */
 	constructor(module: WasmModule) {
 		this.module = module;
 	}
 
+	/**
+	 * Generates a string representation of the WasmModule in WAT format.
+	 * @returns The formatted WAT string.
+	 */
 	format(): string {
 		this.lines = [];
 		this.indentLevel = 0;
@@ -86,6 +98,11 @@ export class WatFormatter {
 		return this.lines.join("\n");
 	}
 
+	/**
+	 * Emits a single instruction.
+	 * Calls appropriate indentation for block structures.
+	 * @param instr The instruction to emit.
+	 */
 	private emitInstruction(instr: Instruction) {
 		const operands = instr.operands
 			.map((op) => {
@@ -111,6 +128,11 @@ export class WatFormatter {
 		// But we just indent.
 	}
 
+	/**
+	 * Formats a ValType enum into its string representation.
+	 * @param type The value type.
+	 * @returns The string representation (e.g., "i32", "f64").
+	 */
 	private formatType(type: ValType): string {
 		// enum to string
 		switch (type) {
@@ -127,14 +149,24 @@ export class WatFormatter {
 		}
 	}
 
+	/**
+	 * Helper to append a line with current indentation.
+	 * @param line The line definition.
+	 */
 	private emit(line: string) {
 		this.lines.push(`${"  ".repeat(this.indentLevel)}${line}`);
 	}
 
+	/**
+	 * Increases indentation level.
+	 */
 	private indent() {
 		this.indentLevel++;
 	}
 
+	/**
+	 * Decreases indentation level.
+	 */
 	private outdent() {
 		this.indentLevel = Math.max(0, this.indentLevel - 1);
 	}

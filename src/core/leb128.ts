@@ -1,6 +1,17 @@
 import { BinaryReader } from "./binary-reader";
 
+/**
+ * Utilities for reading LEB128 (Little Endian Base 128) encoded values.
+ * LEB128 is a variable-length code compression method used in WebAssembly.
+ * Reference: https://webassembly.github.io/spec/core/binary/values.html#integers
+ */
 export const LEB128 = {
+	/**
+	 * Reads a variable-length unsigned 32-bit integer (varuint32).
+	 * @param reader The BinaryReader instance to read from.
+	 * @returns The decoded unsigned 32-bit integer.
+	 * @throws Error if the integer representation is too long.
+	 */
 	readVarUint32(reader: BinaryReader): number {
 		let result = 0;
 		let shift = 0;
@@ -23,6 +34,12 @@ export const LEB128 = {
 		return result >>> 0; // Ensure unsigned 32-bit
 	},
 
+	/**
+	 * Reads a variable-length signed 32-bit integer (varint32).
+	 * @param reader The BinaryReader instance to read from.
+	 * @returns The decoded signed 32-bit integer.
+	 * @throws Error if the integer representation is too long.
+	 */
 	readVarInt32(reader: BinaryReader): number {
 		let result = 0;
 		let shift = 0;
@@ -45,6 +62,13 @@ export const LEB128 = {
 		return result;
 	},
 
+	/**
+	 * Reads a variable-length signed 64-bit integer (varint64).
+	 * Uses BigInt to support 64-bit values in JavaScript.
+	 * @param reader The BinaryReader instance to read from.
+	 * @returns The decoded signed 64-bit integer as a BigInt.
+	 * @throws Error if the integer representation is too long.
+	 */
 	readVarInt64(reader: BinaryReader): bigint {
 		let result = 0n;
 		let shift = 0n;
@@ -65,6 +89,7 @@ export const LEB128 = {
 			// Create a mask of 1s from bit `shift` upwards
 			// ~0n is ...111111
 			// We need to shift it left by `shift`
+			// Use boolean logic for clarity/correctness in comments if confusing, but bitwise is standard
 			const mask = ~0n << shift;
 			result |= mask;
 		}
