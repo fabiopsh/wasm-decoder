@@ -3,6 +3,8 @@
 A client-side WebAssembly Decoder built with **SolidJS**, **TypeScript**, and **Tailwind CSS**.
 This project parses `.wasm` binary files and displays their corresponding textual representation (`.wat`) directly in the browser, without using any external parsing libraries (e.g., `wabt.js` or `binaryen`).
 
+Try it: https://fabiopsh.github.io/wasm-decoder/
+
 ## Features
 
 -  **Zero Dependencies Parsing**: Custom implementation of a WebAssembly Binary Reader, LEB128 decoder, and AST parser.
