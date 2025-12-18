@@ -4,8 +4,9 @@ import Decoder from "./pages/Decoder";
 import About from "./pages/About";
 
 const App: Component = () => {
+	const base = import.meta.env.BASE_URL?.replace(/\/$/, "");
 	return (
-		<Router base={import.meta.env.BASE_URL}>
+		<Router base={base}>
 			<Route path="/" component={Decoder} />
 			<Route path="/about" component={About} />
 		</Router>
