@@ -31,7 +31,7 @@ Try it: https://fabiopsh.github.io/wasm-decoder/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/wasm-decoder.git
+   git clone https://github.com/fabiopsh/wasm-decoder.git
    cd wasm-decoder
    ```
 
@@ -48,7 +48,7 @@ Start the development server:
 npm run dev
 ```
 
-Open your browser and navigate to `http://localhost:3000`.
+Open your browser and navigate to `http://localhost:3000/wasm-decoder`.
 
 ### Build
 
