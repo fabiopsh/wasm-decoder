@@ -125,6 +125,3 @@ dist
 
 # Visual Studio Code
 .vscode/
-
-# Wasm Decoder specific
-*.wasm
