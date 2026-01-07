@@ -28,7 +28,6 @@ const Layout: Component<LayoutProps> = (props) => {
 					<nav class="flex items-center gap-2 bg-surfaceVariant/50 p-1 rounded-full border border-outline/10">
 						<A
 							href="/"
-							end
 							class="px-4 py-2 rounded-full text-sm font-medium transition-all"
 							activeClass="bg-primary text-onPrimary shadow-sm"
 							inactiveClass="text-outline hover:text-primary hover:bg-primary/10"
