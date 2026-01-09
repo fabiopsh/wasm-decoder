@@ -1,13 +1,18 @@
 import { Component, JSX, Show } from "solid-js";
-import { A, useMatch } from "@solidjs/router";
+import { A, useLocation } from "@solidjs/router";
 
 interface LayoutProps {
 	children?: JSX.Element;
 }
 
 const Layout: Component<LayoutProps> = (props) => {
-	const matchAbout = useMatch(() => "/about");
-	const isAbout = () => Boolean(matchAbout());
+	const location = useLocation();
+	// Check for "about" in the pathname, robust to slashes
+	const isAbout = () => {
+		const path = location.pathname;
+		return path === "/about" || path === "/about/" || path.endsWith("/about") || path.includes("/about/");
+	};
+	const isHome = () => !isAbout();
 
 	return (
 		<div class="min-h-screen bg-background text-onBackground font-sans flex flex-col">
@@ -28,17 +33,21 @@ const Layout: Component<LayoutProps> = (props) => {
 					<nav class="flex items-center gap-2 bg-surfaceVariant/50 p-1 rounded-full border border-outline/10">
 						<A
 							href="/"
-							class="px-4 py-2 rounded-full text-sm font-medium transition-all"
-							activeClass="bg-primary text-onPrimary shadow-sm"
-							inactiveClass="text-outline hover:text-primary hover:bg-primary/10"
+							class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+								isHome()
+									? "bg-primary text-onPrimary shadow-sm"
+									: "text-outline hover:text-primary hover:bg-primary/10"
+							}`}
 						>
 							Decoder
 						</A>
 						<A
 							href="/about"
-							class="px-4 py-2 rounded-full text-sm font-medium transition-all"
-							activeClass="bg-primary text-onPrimary shadow-sm white-space-nowrap"
-							inactiveClass="text-outline hover:text-primary hover:bg-primary/10"
+							class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+								isAbout()
+									? "bg-primary text-onPrimary shadow-sm white-space-nowrap"
+									: "text-outline hover:text-primary hover:bg-primary/10"
+							}`}
 						>
 							About
 						</A>

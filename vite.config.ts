@@ -9,5 +9,5 @@ export default defineConfig({
 	build: {
 		target: "esnext",
 	},
-	base: "/wasm-decoder/", // Questo è il percorso relativo quando il progetto è su GitHub Pages.
+	base: "/wasm-decoder", // Base path without trailing slash
 });
